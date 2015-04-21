@@ -1,34 +1,13 @@
-var application = angular.module("ASDFASDF", []);
+var app = angular.module("app", ["firebase"]);
 
-application.controller("TodoCtrl", ["$scope", function($scope){
-	$scope.todos = [
-		{text:'learn angular', done:true},
-		{text:'build an angular app', done:false},
-				{text:'build an angular app 2', done:true}
+app.controller("TodoCtrl", ["$scope", "$firebaseArray", function($scope, $firebaseArray){
+	//check if there are any cookies, if there are any - console.log - select all cookies and output them
+	var myFirebaseRef = new Firebase("https://flickering-torch-7820.firebaseio.com/");
 
-	];
-
-	$scope.arch = [];
-
-	$scope.addTodo = function() {
-		$scope.todos.push({text:$scope.todoText, done:false});
-		$scope.todoText = '';
-	};
-
-	$scope.remaining = function() {
-		var count = 0;
-		angular.forEach($scope.todos, function(todo) {
-			count += todo.done ? 0 : 1;
-		});
-		return count;
-	};
-
-	$scope.archive = function() {
-		var oldTodos = $scope.todos;
-		$scope.todos = [];
-		angular.forEach(oldTodos, function(todo) {
-			if (!todo.done) $scope.todos.push(todo);
-			else $scope.arch.push(todo)
+	$scope.listFromFirebase = $firebaseArray(myFirebaseRef);
+	$scope.addTask = function() {
+		$scope.listFromFirebase.$add({
+			text: $scope.todoText
 		});
 	};
 }]);
