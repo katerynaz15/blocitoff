@@ -1,13 +1,25 @@
-var app = angular.module("app", ["firebase"]);
+var app = angular.module("app", ["firebase", "ui.router"]);
 
 app.controller("TodoCtrl", ["$scope", "$firebaseArray", function($scope, $firebaseArray){
-	//check if there are any cookies, if there are any - console.log - select all cookies and output them
 	var myFirebaseRef = new Firebase("https://flickering-torch-7820.firebaseio.com/");
+
+	var emptyTask = {};
+	$scope.resetButtonEnabled = false;
 
 	$scope.listFromFirebase = $firebaseArray(myFirebaseRef);
 	$scope.addTask = function() {
-		$scope.listFromFirebase.$add({
-			text: $scope.todoText
-		});
+		var t = {
+			text: $scope.newTodo.text,
+			priority: $scope.newTodo.myPriority,
+			createdAtInt: new Date(2010, 6, 26).getTime() / 1000,
+			done: false
+		};
+		$scope.listFromFirebase.$add(t);
+		$scope.reset();
 	};
+
+	$scope.reset = function() {
+		$scope.newTodo = {};
+	};
+
 }]);
