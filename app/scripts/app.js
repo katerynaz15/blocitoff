@@ -1,5 +1,35 @@
 var app = angular.module("app", ["firebase", "ui.router"]);
 
+app.config(['$stateProvider', '$locationProvider', function($stateProvider, $locationProvider) {
+	$locationProvider.html5Mode(true);
+
+	$stateProvider
+	// .state({url: "/", controller: "TodoCtrl"})
+		.state('active', {
+		url: '/active',
+		templateUrl: 'active.html',
+		controller: 'active.controller'
+	});
+
+	$stateProvider.state('history', {
+		url: '/history',
+		templateUrl: 'history.html',
+		controller: 'history.controller',
+	});
+
+}]);
+
+
+app.controller('active.controller', [
+	"$log",
+	"$scope",
+	function($log, $scope) {
+		$log.debug("In the active.controller");
+	}
+]);
+
+app.controller('history.controller', ["$scope", function($scope) {console.log("history.controller");}]);
+
 app.controller("TodoCtrl", ["$scope", "$firebaseArray", function($scope, $firebaseArray){
 	var myFirebaseRef = new Firebase("https://flickering-torch-7820.firebaseio.com/");
 
