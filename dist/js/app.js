@@ -8,14 +8,15 @@ app.config(['$stateProvider', '$locationProvider', function($stateProvider, $loc
 	// .state({url: "/", controller: "TodoCtrl"})
 		.state('active', {
 		url: '/active',
-		templateUrl: 'active.html',
-		controller: 'active.controller'
+		templateUrl: '/templates/active.html',
+		controller: 'TodoCtrl'
 	});
 
-	$stateProvider.state('history', {
+	$stateProvider
+		.state('history', {
 		url: '/history',
-		templateUrl: 'history.html',
-		controller: 'history.controller',
+		templateUrl: '/templates/history.html',
+		controller: 'TodoCtrl',
 	});
 
 }]);
