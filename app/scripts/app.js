@@ -38,11 +38,18 @@ app.controller("TodoCtrl", ["$scope", "$firebaseArray", function($scope, $fireba
 	$scope.resetButtonEnabled = false;
 
 	$scope.listFromFirebase = $firebaseArray(myFirebaseRef);
+
+	// $scope.isTodoExpired = function(todo) {
+	// 	var now = new Date();
+	// 	var created  = new Date();
+	// 	return now - created > 7;
+	// };
+
 	$scope.addTask = function() {
 		var t = {
 			text: $scope.newTodo.text,
 			priority: $scope.newTodo.myPriority,
-			createdAtInt: new Date(2010, 6, 26).getTime() / 1000,
+			createdAtInt: new Date(2015, 4, 26).getTime() / 1000,
 			done: false
 		};
 		$scope.listFromFirebase.$add(t);

@@ -1,12 +1,7 @@
-<h1>Active</h1>
-<div class="row">
-	<ul class="nav-bar">
-		<a href="#/active" ui-sref="active">Active Tasks</a> | <a href="#/history" ui-sref="history">Task History</a>
-	</ul>
-</div>
-<p><span>Remaining {{remaining()}} from {{todos.length}}</span></p>
-<ul class="unstyled">
-	<li ng-repeat="todo in listFromFirebase">
+<h3>Current Tasks</h3>
+
+<ul class="unstyled" ng-init="isDone = false">
+	<li ng-repeat="todo in listFromFirebase | filter:isDone">
 		<input type="checkbox" ng-model="todo.done" ng-change="listFromFirebase.$save(todo)" />
 		<span class="done-{{todo.done}} todoText">{{todo.text}}</span><small class="todoPrio">{{todo.priority}}</small><span class="datetime">{{todo.createdAtInt | date:'medium'}}</span>
 	</li>
