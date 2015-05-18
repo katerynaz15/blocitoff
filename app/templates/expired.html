@@ -1,14 +1,17 @@
 <h3>Current Tasks</h3>
 
-<ul class="unstyled" ng-init="isDone = false">
-	<li ng-repeat="todo in listFromFirebase | filter:isDone">
+<ul class="unstyled" ng-init="isDone = true">
+	<li ng-repeat="todo in listFromFirebase | filter:isExpired">
 		<input type="checkbox" ng-model="todo.done" ng-change="listFromFirebase.$save(todo)" />
 		<span class="done-{{todo.done}} todoText">{{todo.text}}</span><small class="todoPrio">{{todo.priority}}</small><span class="datetime">{{todo.createdAtInt | date:'medium'}}</span>
 	</li>
 </ul>
 <form ng-submit="addTask()">
 	<input type="text" ng-model="newTodo.text" placeholder="New Task">
-	<select ng-model="newTodo.myPriority" ng-options="p.value as p.display for p in priorityChoices">
+	<select ng-model="newTodo.myPriority">
+		<option>High</option>
+		<option>Medium</option>
+		<option>Low</option>
 	</select>
 	<!-- <button type="submit" class="btn btn-primary">Add Task</button> -->
 

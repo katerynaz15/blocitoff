@@ -1,0 +1,4 @@
+html, body {
+  background-color: steelblue; }
+  html a, body a {
+    background-color: darkgreen; }

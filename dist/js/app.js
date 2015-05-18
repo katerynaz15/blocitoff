@@ -35,24 +35,39 @@ app.controller('history.controller', ["$scope", function($scope) {console.log("h
 app.controller("TodoCtrl", ["$scope", "$firebaseArray", function($scope, $firebaseArray){
 	var myFirebaseRef = new Firebase("https://flickering-torch-7820.firebaseio.com/");
 
+	$scope.priorityChoices = [
+		{display: "High", value: 0},
+		{display: "Med", value: 1},
+		{display: "Low", value: 3}
+	];
+
 	var emptyTask = {};
 	$scope.resetButtonEnabled = false;
 
 	$scope.listFromFirebase = $firebaseArray(myFirebaseRef);
 
-	// $scope.isTodoExpired = function(todo) {
-	// 	var now = new Date();
-	// 	var created  = new Date();
-	// 	return now - created > 7;
-	// };
+	$scope.isTodoExpired = function(todo) {
+		var today = new Date();
+		var now  = today.getTime();
+		if(todo.expiresAtInt <= now){
+			todo.isExpired = true;
+		}
+	};
 
+	
 	$scope.addTask = function() {
+		var now  = new Date().getTime();
+		var sevenDaysFromNow;
+		var expirationDays = 7;
 		var t = {
 			text: $scope.newTodo.text,
 			priority: $scope.newTodo.myPriority,
-			createdAtInt: new Date(2015, 4, 26).getTime() / 1000,
-			done: false
+			createdAtInt: now,
+			expiresAtInt: now + expirationDays*millisecondsPerDay,
+			done: false,
+			isExpired: false
 		};
+
 		$scope.listFromFirebase.$add(t);
 		$scope.reset();
 	};

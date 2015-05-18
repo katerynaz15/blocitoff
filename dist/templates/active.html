@@ -8,10 +8,7 @@
 </ul>
 <form ng-submit="addTask()">
 	<input type="text" ng-model="newTodo.text" placeholder="New Task">
-	<select ng-model="newTodo.myPriority">
-		<option>High</option>
-		<option>Medium</option>
-		<option>Low</option>
+	<select ng-model="newTodo.myPriority" ng-options="p.value as p.display for p in priorityChoices">
 	</select>
 	<!-- <button type="submit" class="btn btn-primary">Add Task</button> -->
 
